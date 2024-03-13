@@ -1,0 +1,189 @@
+openapi: 3.0.2
+info:
+  title: ECOS OPEN API
+  description: |
+    # 경제 통계 OpenAPI 서비스
+
+    ---
+  x-logo:
+    url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAUCAMAAAAKqMsNAAABXFBMVEVHcEwsodotoNktoNkwo9stoNktoNktoNktoNkrn9kkototodotoNktoNkypdwtoNksoNktoNkroNotoNktoNkqoNkTn92e0u8toNktoNmk1fD+/v8toNktoNktoNktoNktoNofodotoNm83vMnoNoAk9guodotoNmY0e7X6vhqwuh4yeyQ0u4FmdrQ7fgOoN2s1/CPy+vU6feHy+y73vN1xepZvOcLpN0Lndzp9fz///8Oot1uv+hKt+UwqN8MndxGsuN6xuqy2/Kv2/L3/P7h7/ldv+hDtOXF5vaTzOzV6vdevOZPtOPv9/wKoNw2r+L///8UodyN0e5rwuj///8hpt8Jo9wGndsAl9ktoNn///98x+oMnNwyqeC02/KQze1RuuYipN/q9PsCmNpgwOhHs+RDsOPI5PXP5vYaod49reFMt+XB4fSr2PHh7/nz+f1twuhZvebe7fkppuCYprRUAAAAWXRSTlMAROSZLj/p1HEbD0/xhwitA1cVdtw4/f7OfP70/Pe5kl4kwv1J/mWj/P7o4+v08FV5XRj86e/qbeXt+4Ya9fRl3Oz64WLr9Ovsc5mQj0ea4nDW4kHf7XOb4J0Zuu0AAAK8SURBVDjLXZN3W+pQDMYLlHILsmdbliwRBPdCve5x9x4t06ICAiL4/Z/nJue0tdz8AW1Ozq/Jm4Thc3bNLGEfQyzgF9xBF/NqHsvx8XHOafL4XEG3kObxMSgbthBAhzNlJW8OHXH48aR5O2g09j4v6vfTIRLCpZxzABkBbMh4dZPg9Z3h/cNj8zbS6FZ26X3BCLGyzBskhaxgXAwAPPl8zBvTAe/qz3cdRLwg4gBdYRqSSchyggJcHidYAItMYvJ2eLBwS+T70famhmhGuvnub/B5ZTkehP/F1AJEIiBsiGPBtIg2DO+Bn42tsUgQ006nJBa3f+VBBwfE0HAUBQF2AwBwOW1Se62fbY3FYrteL5W+V2vSfv0PASywRshcBh4O4D5T/85nvREgotHNL5VupVxTlHKAfIUreEyAZMoGBmWxcVn2mhJgR+pyvzdqtc52GoNIt1JVFPUHFVEOCbwBiFOPj0jgNgFcI+VpBoh++S2OQndFUWoXDFPQ5samayDrgNx/gNVWTVWfZrPzI5yEAQAmylfw52Iawq+VgBUsBWkTUmbA3U9pMtnf2p527nGWzibq5IKI489QhIUADElRg6QJEI5Upf3Lm2i7fgeE2+vqbKZ+0s+WEJAhAIuhulXfCO3971CqLfeyYyQ8vF3p95YvN4xTP4wiNw9gkCqYUjjIX0mK2s+KQDg6bbVGvfe4i9opjG1ivgTSoQTlpW24mnv56xtJAkTxdLsYFVtZSGAxFqQ7TUYSAYKLmD9ARzEuhPmwm/ZjtZGP7JyPxZXy1XO9HRXXYMbhXtLP8naM9ZraKMvQFKeD9of84qTsNsAGL837zhQIa5gaOYuTkDhr2m0CYPiMses5UuvqXgTuPz4Mh9PSOsm8wOkhHFSbdrwaXapCBuGhFK/p4jz4RggnHw41T8AdS2CIDUL+ATsizwaS7sWiAAAAAElFTkSuQmCC"
+    altText: logo
+
+  version: 0.1.0
+servers:
+- url: /api
+tags:
+- name: StatisticTableList
+  description: '통계목록조회'
+- name: StatisticWordnpm
+  description: '통계용어사용'
+paths:
+  /StatisticTableList/{apiKey}/{dataType}/{language}/{startcnt}/{endcnt}/{statisticcode}:
+    get:
+      tags:
+      - StatisticTableList
+      summary: GET method 를 이용한 통계목록 조회
+      description: 서비스 통계 목록 조회.
+      operationId: get_StatisticTableList
+      parameters:
+      - name: apiKey
+        in: path
+        description: 기관 발급 api 키
+        required: true
+        example: "sample"
+      - name: dataType
+        in: path
+        description: 데이터 타입 (xml/json)
+        example: "xml"
+        required: true        
+      - name: language
+        in: path
+        description: 언어구분(kr)
+        required: true
+        example: "kr"
+      - name: startcnt
+        in: path
+        description: 요청시작건수
+        required: true
+        example: 1   
+      - name: endcnt
+        in: path
+        description: 요청종료건수
+        required: true    
+        example: 10   
+      - name: statisticcode
+        in: path
+        description: 통계표코드
+        required: true 
+        example: "102Y004"                          
+      responses:
+        "200":
+          description: "성공적인 응답"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticTableList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StatisticTableList'
+  /StatisticTableList:
+    post:
+      security:
+        - bearerAuth: []    
+      tags:
+      - StatisticTableList    
+      summary: POST method 를 이용한 통계목록 조회
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apiKey:
+                  type: string
+                  example: "sample"
+                dataType:
+                  type: string
+                  example: "xml"
+                language:
+                  type: string
+                  example: "kr"
+                startcnt:
+                  type: integer
+                  example: 1
+                endcnt:
+                  type: integer
+                  example: 10
+                statisticcode:
+                  type: string
+                  example: "102Y004"
+          application/xml:
+            schema:
+              type: object
+              properties:
+                apiKey:
+                  type: string
+                  example: "sample"
+                dataType:
+                  type: string
+                  example: "xml"
+                language:
+                  type: string
+                  example: "kr"
+                startcnt:
+                  type: integer
+                  example: 1
+                endcnt:
+                  type: integer
+                  example: 10
+                statisticcode:
+                  type: string
+                  example: "102Y004"                
+      responses:
+        '200':
+          description: "성공적인 응답"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticTableList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StatisticTableList'
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+  schemas:
+    StatisticTableList:   
+      type: object
+      description: 통계목록 출력 결과
+      properties:
+        list_total_count:
+          type: number
+          example: 1
+          description: 총 조회 건수
+        row:
+          type: array
+          items:
+            type: object
+            required:
+            - P_STAT_CODE 
+            properties:
+              P_STAT_CODE:
+                type: string
+                example: "0000000004"
+                description: "상위통계표코드"
+              STAT_CODE:
+                type: string
+                example: "102Y004"
+                description: "통계표코드"
+              STAT_NAME:
+                type: string
+                example: "1.1.1.1.1. 본원통화 구성내역(평잔, 계절조정계열)"
+                description: "통계명"
+              CYCLE:
+                type: string
+                example: "M"
+                description: "주기(년,분기,월)"
+              SRCH_YN:
+                type: string
+                example: "Y"
+                description: "검색가능여부"
+              ORG_NAME:
+                type: string
+                example: "AAA"
+                description: "출처"
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string      
